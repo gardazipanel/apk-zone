@@ -1,0 +1,186 @@
+{
+  "apps": [
+    {
+      "slug": "doodh-dahi",
+      "name": "Doodh Dahi",
+      "category": "Business",
+      "tagline": "Doodh aur dahi ka hisab, asaan tareeqay se",
+      "description": [
+        "Doodh Dahi aap ki dukan ya dairy ka rozana hisab rakhne ke liye bani app hai.",
+        "Is app ki mukammal details jald yahan add ki jayengi."
+      ],
+      "features": [
+        "Rozana doodh/dahi ki entries",
+        "Simple aur tez interface",
+        "Internet ke baghair istemal"
+      ],
+      "logo": "assets/logos/doodh-dahi.png",
+      "screenshots": [],
+      "version": "1.0.0",
+      "package": "com.webapp.doodhdahi",
+      "minAndroid": "7.0",
+      "updated": "2026-11-23",
+      "releaseTag": "doodh-dahi-v1.0.0",
+      "file": "doodh-dahi.apk",
+      "sizeBytes": 10970746,
+      "sha256": "f53403db740d9998ed865e7cfa4bef0fe206d972a38b641dbeec6272e194a517",
+      "featured": true
+    },
+    {
+      "slug": "barber-manager",
+      "name": "Barber Manager",
+      "category": "Business",
+      "tagline": "Barber shop ko manage karein",
+      "description": [
+        "Barber Manager barber shop ke kaam, customers aur kamai ko sambhalne mein madad deti hai.",
+        "Is app ki mukammal details jald yahan add ki jayengi."
+      ],
+      "features": [
+        "Customers aur services ka record",
+        "Rozana kamai ka hisab",
+        "Simple aur tez interface"
+      ],
+      "logo": "assets/logos/barber-manager.png",
+      "screenshots": [],
+      "version": "1.0.0",
+      "package": "com.webapp.barbermanager",
+      "minAndroid": "7.0",
+      "updated": "2026-11-23",
+      "releaseTag": "barber-manager-v1.0.0",
+      "file": "barber-manager.apk",
+      "sizeBytes": 14554330,
+      "sha256": "98854d1cfe881cafe1b1d1aafb6b6bdeb01289652d9f0212cff92638e0303c64",
+      "featured": true
+    },
+    {
+      "slug": "easy-mechanic",
+      "name": "Easy Mechanic",
+      "category": "Business",
+      "tagline": "Car aur bike workshop ka manager",
+      "description": [
+        "Easy Mechanic workshop ke kaam, gariyon aur bills ka record rakhne ke liye hai.",
+        "Is app ki mukammal details jald yahan add ki jayengi."
+      ],
+      "features": [
+        "Car aur bike ka record",
+        "Kaam aur bills ka hisab",
+        "Internet ke baghair istemal"
+      ],
+      "logo": "assets/logos/easy-mechanic.png",
+      "screenshots": [],
+      "version": "1.0.0",
+      "package": "com.webapp.easymachine",
+      "minAndroid": "7.0",
+      "updated": "2026-11-23",
+      "releaseTag": "easy-mechanic-v1.0.0",
+      "file": "easy-mechanic.apk",
+      "sizeBytes": 10858794,
+      "sha256": "6d83401cd2f28989500d598c51221c6e905fba3d2fd338138df70cb1b2dc198e",
+      "featured": true
+    },
+    {
+      "slug": "easy-karyana",
+      "name": "Easy Karyana",
+      "category": "Business",
+      "tagline": "Karyana store ka asaan hisab",
+      "description": [
+        "Easy Karyana aap ki karyana dukan ka saman aur hisab kitab asaan banati hai.",
+        "Is app ki mukammal details jald yahan add ki jayengi."
+      ],
+      "features": [
+        "Saman aur stock ka record",
+        "Rozana bikri ka hisab",
+        "Simple aur tez interface"
+      ],
+      "logo": "assets/logos/easy-karyana.png",
+      "screenshots": [],
+      "version": "1.0.0",
+      "package": "com.webapp.easykaryana",
+      "minAndroid": "7.0",
+      "updated": "2026-11-23",
+      "releaseTag": "easy-karyana-v1.0.0",
+      "file": "easy-karyana.apk",
+      "sizeBytes": 11019554,
+      "sha256": "a0ea505ff6c17b3ba983a286c2cc51b7ac2c3f34f6f8ebb44af5b0198b4e43c2",
+      "featured": true
+    },
+    {
+      "slug": "gym-manager",
+      "name": "Gym Manager",
+      "category": "Business",
+      "tagline": "Gym members aur fees ka record",
+      "description": [
+        "Gym Manager gym ke members, fees aur hazri sambhalne ke liye banai gayi hai.",
+        "Is app ki mukammal details jald yahan add ki jayengi."
+      ],
+      "features": [
+        "Members ka record",
+        "Fees ka hisab",
+        "Simple aur tez interface"
+      ],
+      "logo": "assets/logos/gym-manager.png",
+      "screenshots": [],
+      "version": "1.0.0",
+      "package": "com.webapp.gymmanager",
+      "minAndroid": "7.0",
+      "updated": "2026-11-23",
+      "releaseTag": "gym-manager-v1.0.0",
+      "file": "gym-manager.apk",
+      "sizeBytes": 10878282,
+      "sha256": "4f90ac36a7b8759f61170c61f29fd70d4f9586af6106a6d89fedf9c75b874754",
+      "featured": true
+    },
+    {
+      "slug": "asan-hisab",
+      "name": "Asan Hisab",
+      "category": "Finance",
+      "tagline": "Rozana ka hisab kitab, asaan",
+      "description": [
+        "Asan Hisab aap ke rozana ke len den aur hisab kitab ke liye ek simple app hai.",
+        "Is app ki mukammal details jald yahan add ki jayengi."
+      ],
+      "features": [
+        "Len den ka record",
+        "Rozana/mahana hisab",
+        "Internet ke baghair istemal"
+      ],
+      "logo": "assets/logos/asan-hisab.png",
+      "screenshots": [],
+      "version": "1.0.0",
+      "package": "com.webapp.asanhisab",
+      "minAndroid": "7.0",
+      "updated": "2026-11-23",
+      "releaseTag": "asan-hisab-v1.0.0",
+      "file": "asan-hisab.apk",
+      "sizeBytes": 10834834,
+      "sha256": "f151e09f8627225460999634b5e4f47eb2b7d40db63827823d24759782226bd3",
+      "featured": true
+    },
+    {
+      "slug": "salon-manager",
+      "name": "Salon Manager",
+      "category": "Business",
+      "tagline": "Beauty salon ko manage karein",
+      "description": [
+        "Salon Manager beauty salon ke appointments, services aur kamai ke record ke liye hai.",
+        "Is app ki mukammal details jald yahan add ki jayengi."
+      ],
+      "features": [
+        "Customers aur services ka record",
+        "Rozana kamai ka hisab",
+        "Simple aur tez interface"
+      ],
+      "logo": "assets/logos/salon-manager.png",
+      "screenshots": [],
+      "version": "1.0.0",
+      "package": "com.webapp.salonmanager",
+      "minAndroid": "7.0",
+      "updated": "2026-11-23",
+      "releaseTag": "salon-manager-v1.0.0",
+      "file": "salon-manager.apk",
+      "sizeBytes": 17061098,
+      "sha256": "c7f607f5d9f55b6c9bb36edb8a1403cbc6bdf3c20ce29586f0b113a6b8186402",
+      "featured": true
+    }
+  ]
+}
