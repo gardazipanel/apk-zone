@@ -1,14 +1,11 @@
 {
   "name": "APK ZONE",
   "tagline": "Download • Enjoy • Anytime",
-  "heroTitle": "Download Your Favorite APKs",
-  "github": {
-    "user": "",
-    "repo": ""
-  },
+  "github": { "user": "", "repo": "" },
   "contact": {
-    "whatsapp": "",
+    "whatsapp": "923184587211",
+    "phone": "03184587211",
     "email": "",
-    "note": "Koi masla ya suggestion ho to hum se rabta karein."
+    "note": "Koi masla, suggestion ya nayi app ki darkhwast ho to seedha rabta karein."
   }
 }
