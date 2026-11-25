@@ -91,28 +91,43 @@ function reveal(root = document, sel = '.grid>*,.feat>*,section .box,ol.steps li
     el.classList.add('rv'); el.style.transitionDelay = (i % 6) * 70 + 'ms'; io.observe(el);
   });
 }
-function initRig() {
-  const rig = $('#rig'), st = $('#stage'); if (!rig) return;
-  let tx = -4, ty = -16, cx = tx, cy = ty, active = false, gyro = false, vis = true, t0 = performance.now(), timer;
-  st.addEventListener('pointermove', e => {
-    const r = st.getBoundingClientRect();
-    ty = ((e.clientX - r.left) / r.width - .5) * 70; tx = -((e.clientY - r.top) / r.height - .5) * 34;
-    active = true; clearTimeout(timer); timer = setTimeout(() => active = false, 2500);
+function buildBubbles() {
+  const app = [[5,6,88],[74,3,80],[0,41,72],[80,40,92],[8,74,84],[62,78,80],[38,86,66]];
+  const empty = [[26,2,30],[58,0,22],[92,22,34],[1,22,20],[18,52,38],[90,66,26],[30,66,18],[78,92,34],[50,92,16],[22,88,26],[93,86,14]];
+  const el = $('#bubbles'); if (!el) return;
+  const r = (a, b) => a + Math.random() * (b - a);
+  let html = '';
+  APPS.slice(0, app.length).forEach((a, i) => {
+    const [x, y, s] = app[i];
+    html += `<div class="bub app" style="left:${x}%;top:${y}%;width:${s}px;height:${s}px;--d:${(5 + i * .6).toFixed(1)}s;--dl:${(-i * .9).toFixed(1)}s;--dy:${i % 2 ? 18 : -18}px;--k:${(.5 + i % 3 * .25).toFixed(2)}"><img src="${esc(a.logo)}" alt="${esc(a.name)}" data-app="${esc(a.name)}"></div>`;
   });
-  addEventListener('deviceorientation', e => {
-    if (e.gamma == null) return; gyro = true;
-    ty = Math.max(-35, Math.min(35, e.gamma)) * 1.3; tx = -Math.max(-20, Math.min(20, (e.beta || 45) - 50)) * .7;
+  empty.forEach(([x, y, s], i) => {
+    html += `<div class="bub" style="left:${x}%;top:${y}%;width:${s}px;height:${s}px;--d:${r(4, 8).toFixed(1)}s;--dl:${(-i * .7).toFixed(1)}s;--dy:${i % 2 ? 24 : -24}px;--k:${(.3 + i % 4 * .25).toFixed(2)}"></div>`;
   });
-  new IntersectionObserver(es => vis = es[0].isIntersecting).observe(st);
-  (function loop(now) {
-    if (vis && !reduce) {
-      if (!active && !gyro) { const t = (now - t0) / 1000; ty = Math.sin(t * .7) * 26 - 8; tx = Math.cos(t * .5) * 8 - 3; }
-      cx += (tx - cx) * .08; cy += (ty - cy) * .08;
-      rig.style.setProperty('--rx', cx.toFixed(2) + 'deg'); rig.style.setProperty('--ry', cy.toFixed(2) + 'deg');
-    }
-    requestAnimationFrame(loop);
-  })(t0);
+  el.innerHTML = html;
 }
+function initParallax() {
+  const st = $('#stage'), sc = $('#scene'), core = $('#core'); if (!st || reduce) return;
+  const move = (cx, cy) => {
+    const r = st.getBoundingClientRect(), x = (cx - r.left) / r.width - .5, y = (cy - r.top) / r.height - .5;
+    sc.style.setProperty('--px', (x * 40).toFixed(1)); sc.style.setProperty('--py', (y * 40).toFixed(1));
+    core.style.setProperty('--cy', (x * 30).toFixed(1) + 'deg'); core.style.setProperty('--cx', (-y * 24).toFixed(1) + 'deg');
+  };
+  st.addEventListener('pointermove', e => move(e.clientX, e.clientY));
+  st.addEventListener('pointerleave', () => { sc.style.setProperty('--px', 0); sc.style.setProperty('--py', 0); core.style.setProperty('--cx', '0deg'); core.style.setProperty('--cy', '0deg'); });
+  addEventListener('deviceorientation', e => {
+    if (e.gamma == null) return;
+    const x = Math.max(-30, Math.min(30, e.gamma)) / 30 * .5, y = Math.max(-20, Math.min(20, (e.beta || 45) - 50)) / 20 * .5;
+    sc.style.setProperty('--px', (x * 40).toFixed(1)); sc.style.setProperty('--py', (y * 40).toFixed(1));
+  });
+}
+/* logo load na ho to naam wala badge dikhao */
+document.addEventListener('error', e => {
+  const i = e.target; if (!i || i.tagName !== 'IMG' || !i.dataset.app) return;
+  const s = document.createElement('span'); s.className = 'lf ' + (i.className || '');
+  s.textContent = i.dataset.app.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase(); s.title = i.dataset.app;
+  i.replaceWith(s);
+}, true);
 
 function layout(active) {
   const name = SITE.name || 'APK ZONE';
@@ -152,7 +167,7 @@ function layout(active) {
 
 const cardHTML = a => `
   <article class="card">
-    <a class="lg" href="app.html?app=${encodeURIComponent(a.slug)}"><img src="${esc(a.logo)}" alt="${esc(a.name)} logo" loading="lazy" width="92" height="92"></a>
+    <a class="lg" href="app.html?app=${encodeURIComponent(a.slug)}"><img src="${esc(a.logo)}" alt="${esc(a.name)} logo" data-app="${esc(a.name)}" loading="lazy" width="92" height="92"></a>
     <h3><a href="app.html?app=${encodeURIComponent(a.slug)}">${esc(a.name)}</a></h3>
     <span class="cat">${esc(a.category)}</span>
     <div class="meta">v${esc(a.version)} • ${mb(a.sizeBytes)}</div>
@@ -171,15 +186,8 @@ function renderHome() {
   $('#q').addEventListener('input', e => draw(e.target.value));
   $('#sform').addEventListener('submit', e => { e.preventDefault(); draw($('#q').value); $('#apps').scrollIntoView(); });
 
-  // 3D phone
-  const layers = Array.from({ length: 12 }, (_, i) => `<i class="pl" style="--z:${-(i + 1) * 2}px"></i>`).join('');
-  const icons = APPS.map(a => `<div><img src="${esc(a.logo)}" alt="">${esc(a.name.split(' ')[0])}</div>`).join('');
-  $('#phone').innerHTML = `${layers}<div class="pf"><div class="screen"><div class="sb"><span>9:41</span><span>📶 🔋</span></div>
-    <div class="mini-search">🔍 Search apps…</div><div class="icons">${icons}</div><div class="dock">APK ZONE</div></div></div>`;
-  const n = APPS.length;
-  $('#orbit').innerHTML = `<div class="ringline"></div><div class="ringline r2"></div><div class="spin">` +
-    APPS.map((a, i) => `<div class="it" style="--a:${Math.round(360 / n * i)}deg;--na:-${Math.round(360 / n * i)}deg"><img src="${esc(a.logo)}" alt="${esc(a.name)}"></div>`).join('') + `</div>`;
-  initRig();
+  buildBubbles();
+  initParallax();
 
   $('#contact-box').innerHTML = contactBox();
   hydrateIcons();
@@ -195,7 +203,7 @@ function renderApp() {
   const others = APPS.filter(x => x.slug !== a.slug);
   m.innerHTML = `<div class="wrap">
     <div class="crumb"><a href="index.html">Home</a> › ${esc(a.name)}</div>
-    <div class="d-head"><div class="d-logo"><span class="halo"></span><span class="halo h2"></span><div class="in3d"><img src="${esc(a.logo)}" alt="${esc(a.name)} logo"></div></div>
+    <div class="d-head"><div class="d-logo"><span class="halo"></span><span class="halo h2"></span><div class="in3d"><img src="${esc(a.logo)}" alt="${esc(a.name)} logo" data-app="${esc(a.name)}"></div></div>
       <div><h1>${esc(a.name)}</h1><p class="tl">${esc(a.tagline)}</p>
       <div class="row"><button class="dl big" data-dl="${esc(a.slug)}">${ic('dl')} Download APK (${mb(a.sizeBytes)})</button>
       <span class="note">v${esc(a.version)} • Android ${esc(a.minAndroid)}+</span></div></div></div>
@@ -249,7 +257,7 @@ function renderAbout() {
     <section><div class="sec-head"><span class="star">${ic('star')}</span><div><h2>Kyun APK ZONE</h2></div></div>
       <div class="feat">${why.map(w => `<div class="box"><div class="ic">${ic(w[0])}</div><h3>${w[1]}</h3><p>${w[2]}</p></div>`).join('')}</div></section>
     <section><div class="sec-head"><span class="star">${ic('apps')}</span><div><h2>Hamari Apps</h2></div><a class="more" href="index.html#apps">Sab dekhein →</a></div>
-      <div class="chips">${APPS.map(a => `<a class="chip" href="app.html?app=${encodeURIComponent(a.slug)}"><img src="${esc(a.logo)}" alt="">${esc(a.name)}</a>`).join('')}</div></section>
+      <div class="chips">${APPS.map(a => `<a class="chip" href="app.html?app=${encodeURIComponent(a.slug)}"><img src="${esc(a.logo)}" alt="" data-app="${esc(a.name)}">${esc(a.name)}</a>`).join('')}</div></section>
     <section><div class="sec-head"><span class="star">${ic('info')}</span><div><h2>Aksar pooche gaye sawalat</h2></div></div>
       <div class="faq">${faq.map(f => `<details class="box"><summary>${esc(f[0])}</summary><p>${f[1]}</p></details>`).join('')}</div></section>
     <section id="contact">${contactBox()}</section></div>`;
@@ -264,7 +272,7 @@ const installSteps = () => `<ol class="steps">
 (async () => {
   const page = document.body.dataset.page;
   try {
-    [SITE, { apps: APPS }] = await Promise.all([fetch('site.json').then(r => r.json()), fetch('apps.json').then(r => r.json())]);
+    [SITE, { apps: APPS }] = await Promise.all([fetch('site.json?v=' + Date.now()).then(r => r.json()), fetch('apps.json?v=' + Date.now()).then(r => r.json())]);
   } catch { document.body.innerHTML = '<p style="padding:30px;color:#fff">Data load nahi hua. Site ko GitHub Pages ya local server par kholein.</p>'; return; }
   layout(page);
   if (page === 'home') { $('#steps').innerHTML = installSteps(); renderHome(); } else if (page === 'about') renderAbout(); else renderApp();

@@ -301,3 +301,39 @@ footer{padding:44px 0 26px;margin-top:50px}
 .faq details[open] summary::after{content:"–"}
 .faq details p{padding:0 20px 18px}
 .contact-card{margin-top:0}
+
+/* ================= v4: bubbles hero ================= */
+.stage{height:500px}
+.scene{width:460px;height:480px;perspective:none;--px:0;--py:0}
+.glow{position:absolute;left:50%;top:50%;width:420px;height:420px;margin:-210px 0 0 -210px;border-radius:50%;
+  background:radial-gradient(circle,rgba(45,140,255,.38),rgba(164,91,255,.16) 50%,transparent 70%);filter:blur(4px)}
+.core{position:absolute;left:50%;top:50%;width:200px;height:200px;margin:-100px 0 0 -100px;z-index:2;perspective:700px;animation:coreBob 6s ease-in-out infinite}
+.core .t3d{position:absolute;inset:0;transform-style:preserve-3d;transform:rotateX(var(--cx,0deg)) rotateY(var(--cy,0deg));transition:transform .2s ease-out}
+.core img{width:100%;height:100%;border-radius:50%;filter:drop-shadow(0 22px 18px rgba(0,0,0,.6)) drop-shadow(0 0 28px rgba(45,140,255,.6))}
+.core .halo{position:absolute;inset:-16px;border-radius:50%;border:3px solid var(--cyan);box-shadow:0 0 24px var(--cyan),inset 0 0 22px rgba(55,214,255,.35);transform:rotateX(72deg);animation:halo 7s linear infinite}
+.core .halo.h2{inset:-34px;border-color:var(--purple);box-shadow:0 0 22px var(--purple);animation-duration:10s;animation-direction:reverse}
+@keyframes coreBob{50%{transform:translateY(-12px)}}
+#bubbles{position:absolute;inset:0;z-index:3;pointer-events:none}
+
+.bub{position:absolute;border-radius:50%;translate:calc(var(--px) * var(--k) * 1px) calc(var(--py) * var(--k) * 1px);transition:translate .35s ease-out;
+  animation:bob var(--d,6s) ease-in-out infinite;animation-delay:var(--dl,0s);
+  background:radial-gradient(circle at 30% 24%,rgba(255,255,255,.5),rgba(255,255,255,.08) 34%,rgba(55,214,255,.10) 62%,rgba(164,91,255,.22));
+  border:1.5px solid rgba(170,215,255,.55);
+  box-shadow:inset 0 0 16px rgba(255,255,255,.22),inset -6px -8px 18px rgba(120,80,255,.28),0 0 24px rgba(55,214,255,.32)}
+.bub::after{content:"";position:absolute;left:18%;top:12%;width:30%;height:18%;border-radius:50%;background:rgba(255,255,255,.7);filter:blur(1px);transform:rotate(-30deg);pointer-events:none}
+.bub.app{display:grid;place-items:center;background:radial-gradient(circle at 30% 24%,rgba(255,255,255,.35),rgba(10,18,60,.55) 60%,rgba(164,91,255,.25))}
+.bub.app img{width:80%;height:80%;border-radius:50%;object-fit:cover;max-width:none}
+.bub.app .lf{width:80%;height:80%;font-size:1.5rem}
+.bub.app::after{z-index:2}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(var(--dy,-18px))}}
+@media(prefers-reduced-motion:reduce){.bub,.core{animation:none}}
+
+.lf{display:grid;place-items:center;border-radius:50%;background:linear-gradient(135deg,#2d8cff,#a45bff);color:#fff;font-family:var(--head);letter-spacing:.05em;aspect-ratio:1;font-size:2.2rem;text-transform:uppercase}
+.card .lf{width:92px;height:92px}
+.chip .lf{width:36px;height:36px;font-size:1rem}
+.d-logo .lf{width:100%;height:100%;font-size:4rem}
+
+@media(max-width:900px){.stage{height:calc(480px * var(--s,1) + 10px);margin-top:-10px;margin-bottom:0}}
+@media(max-width:500px){.scene,.stage{--s:.74}}
+@media(max-width:370px){.scene,.stage{--s:.66}}
+.stage{grid-template-columns:minmax(0,1fr)}
